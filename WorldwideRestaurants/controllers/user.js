@@ -9,8 +9,18 @@ const {validationResult} = require('express-validator');
 
 
 function showProfile(req, res){
-    console.log("show profile function")
-    // res.render("auth/signup");
+    User.findOne({_id: req.user.id}).exec((err, user) =>{
+        if(err){
+            res.json({success: false, message: err});
+        } else {
+            if(!user){
+                res.json({success: false, message: 'User not found'});
+            } else {
+                res.json({success: true, user: user})
+            }
+        }
+     });
+    // res.json({name: 'mateas'})
 }
 
 function signup_get(req, res){
@@ -105,5 +115,30 @@ async function signinPost(req, res){
    }
 }
 
+async function deleteProfile(req, res){
+    console.log("user id", req.user.id)
+    try{
+        
+        await User.findByIdAndDelete(req.user.id)
+        res.json({'message': "user deleted successfully"})
 
-module.exports = {signupPost, showProfile, signup_get, signinPost}
+    }
+    catch (error){
+        console.log(error)
+        res.json({"message": error.message})
+    }
+}
+
+async function updateProfile(req, res){
+    try{
+        await User.findByIdAndUpdate(req.user.id)
+        res.json({'message': "user deleted successfully"})
+    }
+    catch (error){
+        console.log(error)
+        res.json({"message": error.message})
+    }
+}
+
+
+module.exports = {signupPost, showProfile, signup_get, signinPost, deleteProfile, updateProfile}

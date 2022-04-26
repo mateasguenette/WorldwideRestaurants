@@ -6,7 +6,7 @@ function showRestaurants(req, res){
 
     const encodedParams = new URLSearchParams();
     encodedParams.append("language", "en_US");
-    encodedParams.append("limit", "30");
+    encodedParams.append("limit", "5");
     encodedParams.append("location_id", "297704");
     encodedParams.append("currency", "USD")
 
@@ -29,4 +29,9 @@ function showRestaurants(req, res){
       });
 }
 
+// function addRestaurants(req, res){
+//   // find curent user??
+//   User.find()
+
+// }
 module.exports = {showRestaurants}

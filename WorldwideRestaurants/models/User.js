@@ -27,7 +27,8 @@ const userSchema = mongoose.Schema({
         required: true,
         minlength: [6, "Your password should be atleast 6 characters"]
     },
-    image: String
+    image: String,
+    favRestaurants: []
 }
 ,
     {
