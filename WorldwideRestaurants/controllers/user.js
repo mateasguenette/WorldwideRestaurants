@@ -2,14 +2,19 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
-const { request } = require('../server');
+
 const { token } = require('morgan');
 const {validationResult} = require('express-validator');
 
 
 
 function showProfile(req, res){
+    console.log("in show profile function")
+    console.log(req.user)
     User.findOne({_id: req.user.id}).exec((err, user) =>{
+        
+        console.log("this is err", err)
+        console.log("this is user", user)
         if(err){
             res.json({success: false, message: err});
         } else {
@@ -30,15 +35,15 @@ function signup_get(req, res){
 
 
 function signupPost(req, res){
-    console.log(req)
+    // console.log(req)
     let user = new User(req.body);
-    console.log(req.body);
-    console.log(`this is my password ${req.body.password}`)
+    // console.log(req.body);
+    // console.log(`this is my password ${req.body.password}`)
     let password2
     bcrypt.hash(user.password, saltRounds, function(err, hash) {
-        console.log(`this is the hash ${hash}`)
+        // console.log(`this is the hash ${hash}`)
         user.password = hash
-        console.log(`this is my hashed password inside hash ${user.password}`)
+        // console.log(`this is my hashed password inside hash ${user.password}`)
         user.save()
 
         .then(() => {
@@ -46,7 +51,7 @@ function signupPost(req, res){
             res.json({'message': "user created successfully"})
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             if(err.code == 11000){
                 res.json({'message': "email already exists"})
             }
@@ -67,7 +72,7 @@ function signupPost(req, res){
         })
     });
  
-    console.log(`this is my hashed password ${user.password}`)
+    // console.log(`this is my hashed password ${user.password}`)
     
     
 }
@@ -75,19 +80,19 @@ function signupPost(req, res){
 
 async function signinPost(req, res){
    let {emailAddress, password} = req.body
-    console.log(emailAddress)
+    // console.log(emailAddress)
    try{
        let user = await User.findOne({ emailAddress })
-       console.log("01")
-       console.log(user + " user after login")
+    //    console.log("01")
+    //    console.log(user + " user after login")
 
        if(!user){
-        console.log("02")
+        // console.log("02")
            return res.json({"message": "invalid email"}).status(400)
        }
 
        const isMatch = await bcrypt.compareSync(password, user.password)
-       console.log(`this is match ${isMatch}`)
+    //    console.log(`this is match ${isMatch}`)
 
        if(!isMatch){
            return res.json({"message": "invalid password"}).status(400)
@@ -98,7 +103,7 @@ async function signinPost(req, res){
                id:user._id
            }
        }
-       console.log(process.env.secret)
+    //    console.log(process.env.secret)
        jwt.sign(
            payload,
            process.env.secret,
@@ -110,16 +115,16 @@ async function signinPost(req, res){
        )
    }
    catch (error){
-       console.log(error)
+    //    console.log(error)
        res.json({"message": error.message}).status(400)
    }
 }
 
 async function deleteProfile(req, res){
-    console.log("user id", req.user.id)
+    console.log("user id", req.query.id)
     try{
         
-        await User.findByIdAndDelete(req.user.id)
+        await User.findByIdAndDelete(req.query.id)
         res.json({'message': "user deleted successfully"})
 
     }
@@ -130,9 +135,11 @@ async function deleteProfile(req, res){
 }
 
 async function updateProfile(req, res){
+    console.log("002", req.body)
     try{
-        await User.findByIdAndUpdate(req.user.id)
-        res.json({'message': "user deleted successfully"})
+        const user = await User.findByIdAndUpdate(req.body._id, req.body, {new: true})
+        console.log(user)
+        res.json({'message': "user updated successfully", "user": user})
     }
     catch (error){
         console.log(error)
