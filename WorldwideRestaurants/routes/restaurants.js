@@ -8,5 +8,7 @@ const isLoggedIn = require("../helper/isLoggedIn")
 //   res.send('<h1>Worldwide Restaurants router</h1>');
 // });
 router.get('/', restaurantsCtrl.showRestaurants)
+// router.get('/search', restaurantsCtrl.searchRestaurants)
+router.post('/add', isLoggedIn, restaurantsCtrl.addRestaurants)
 
 module.exports = router;

@@ -137,7 +137,7 @@ async function deleteProfile(req, res){
 async function updateProfile(req, res){
     console.log("002", req.body)
     try{
-        const user = await User.findByIdAndUpdate(req.body._id, req.body, {new: true})
+        const user = await User.findByIdAndUpdate(req.body.id, req.body, {new: true})
         console.log(user)
         res.json({'message': "user updated successfully", "user": user})
     }

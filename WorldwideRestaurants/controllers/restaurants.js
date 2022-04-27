@@ -1,4 +1,6 @@
 const axios = require("axios");
+const { findOne, findById } = require("../models/User");
+const User = require('../models/User');
 
 
 function showRestaurants(req, res){
@@ -29,9 +31,24 @@ function showRestaurants(req, res){
       });
 }
 
-// function addRestaurants(req, res){
-//   // find curent user??
-//   User.find()
+function searchRestaurants(req, res){
 
-// }
-module.exports = {showRestaurants}
+}
+
+async function addRestaurants(req, res){
+  try{
+    const user = await User.findById(req.body._id)
+    console.log("this is user in addRestaurant")
+    user.favRestaurants.push(req.body.favrestaurants) 
+    user.save()
+  
+    res.json({'message': "restaurants added successfully", "user": user})
+}
+catch (error){
+    console.log(error)
+    res.json({"message": error.message})
+}
+}
+
+
+module.exports = {showRestaurants, addRestaurants}

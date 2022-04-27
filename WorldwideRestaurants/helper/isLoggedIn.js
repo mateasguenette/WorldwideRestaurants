@@ -4,6 +4,7 @@ require("dotenv").config();
 module.exports = (req, res, next) =>{
     // const token = req.header("x-auth-token")
     // console.log(token)
+    console.log("this is from is logged In", req.body)
 
     var authorizationToken = req.header("Authorization");
     console.log(authorizationToken);
