@@ -49,7 +49,7 @@ function signupPost(req, res){
         .then(() => {
             // res.redirect('/auth/signin');
             res.json({'message': "user created successfully"})
-            // res.redirect('/signin')
+            
         })
         .catch((err) => {
             // console.log(err)
