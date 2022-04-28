@@ -10,5 +10,7 @@ const isLoggedIn = require("../helper/isLoggedIn")
 router.get('/', restaurantsCtrl.showRestaurants)
 // router.get('/search', restaurantsCtrl.searchRestaurants)
 router.post('/add', isLoggedIn, restaurantsCtrl.addRestaurants)
+router.post('/search', restaurantsCtrl.searchCity)
+router.post('/cityid', restaurantsCtrl.showRestaurants)
 
 module.exports = router;

@@ -25,7 +25,7 @@ function showProfile(req, res){
             }
         }
      });
-    // res.json({name: 'mateas'})
+    
 }
 
 function signup_get(req, res){
@@ -49,6 +49,7 @@ function signupPost(req, res){
         .then(() => {
             // res.redirect('/auth/signin');
             res.json({'message': "user created successfully"})
+            res.redirect('/signin')
         })
         .catch((err) => {
             // console.log(err)
@@ -111,6 +112,7 @@ async function signinPost(req, res){
            (err, token) => {
                if(err) throw err;
                res.json({token}).status(200)
+               
            }
        )
    }

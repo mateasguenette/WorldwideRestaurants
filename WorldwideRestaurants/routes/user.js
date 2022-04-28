@@ -18,4 +18,5 @@ router.put('/update', isLoggedIn, userCtrl.updateProfile)
 
 
 
+
 module.exports = router;
