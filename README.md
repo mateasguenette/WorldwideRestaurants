@@ -34,4 +34,5 @@ The web app can be accessed [here](https://eventappsei48.herokuapp.com/main)
 - Implement map api
 - improve search function
 - use redirect
-- make logout function
+- make logout function      
+- mobile friendly
