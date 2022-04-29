@@ -83,10 +83,11 @@ axios.request(options).then(function (response) {
 
 async function addRestaurants(req, res){
   try{
-    const user = await User.findById(req.body.id)
+    console.log("33", req.body)
+    let user = await User.findById(req.body.id)
     console.log("this is  in addRestaurant", req.body.restaurant.name)
     user.favRestaurants.push(req.body.restaurant.name) 
-    user.save()
+    user = await user.save()
   
     res.json({'message': "restaurants added successfully", "user": user})
 }

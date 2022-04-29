@@ -7,10 +7,6 @@
 
 By using worldwide restaurants, you can find restaurants in any city, keep track of your favorite restaurants, create, edit and delete your account.
 
-## Screenshots
-
-![Starting game board](.png)
-![Final game board](.png)
 
 ## Technologies Used
 
@@ -22,9 +18,7 @@ By using worldwide restaurants, you can find restaurants in any city, keep track
 - Node.js
 - React
 
-## Play the Game
 
-The web app can be accessed [here](https://eventappsei48.herokuapp.com/main)
 
 
 
